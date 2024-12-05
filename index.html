@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fade-in-text {
+            font-size: 2.5rem;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+
+        #second-text {
+            margin-top: 20px;
+            animation-delay: 3s;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    <div id="container">
+        <div class="fade-in-text" id="first-text">Happy New Year</div>
+        <div class="fade-in-text" id="second-text" style="opacity: 0;">Welcome to 2025</div>
+    </div>
+
+    <script>
+        // رسم النجوم على الخلفية
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawStar(x, y, radius) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        function createStars() {
+            for (let i = 0; i < 150; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = Math.random() * 2;
+                drawStar(x, y, radius);
+            }
+        }
+
+        // إعادة رسم النجوم عند تغيير حجم النافذة
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createStars();
+        });
+
+        createStars();
+
+        // إضافة تأثير النص
+        const firstText = document.getElementById('first-text');
+        const secondText = document.getElementById('second-text');
+
+        setTimeout(() => {
+            secondText.style.opacity = 1;
+        }, 3000); // يظهر النص الثاني بعد 3 ثوان
+    </script>
+</body>
+</html>
